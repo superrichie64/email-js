@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Form</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        button {
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            cursor: pointer;
+            background: #5f27cd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+
+        button:hover {
+            background: #4b1fb2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Contact Form</h1>
+
+    <form id="contactForm">
+
+        <input
+            type="hidden"
+            name="subject"
+            value="Contact Form Submission">
+
+        <label for="name">Name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Your Name"
+            required>
+
+        <label for="email">Email</label>
+        <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Your Email"
+            required>
+
+        <label for="message">Message</label>
+        <textarea
+            id="message"
+            name="message"
+            placeholder="Your Message"
+            required></textarea>
+
+        <button type="submit">
+            Send Message
+        </button>
+
+    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <script>
+
+        emailjs.init({
+            publicKey: "6Y0wGAxCLHRQsU2yA"
+        });
+
+        document
+            .getElementById("contactForm")
+            .addEventListener("submit", function(event) {
+
+                event.preventDefault();
+
+                 emailjs.sendForm(
+                'service_6z5435n',
+                'template_kf2o5hm',
+                this
+            ).then(
+                function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    alert('Message sent!');
+                },
+                function(error) {
+                    console.log('FAILED...', error);
+                    console.log('Status:', error.status);
+                    console.log('Text:', error.text);
+                    alert(error.text);
+                }
+            );
+            });
+
+    </script>
+
+</body>
+</html>
